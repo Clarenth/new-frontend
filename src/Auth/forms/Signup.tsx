@@ -1,4 +1,5 @@
 // Libraries
+import { Link } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import * as zod from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -11,11 +12,11 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
-// Styles
-
+// Shared
+import Loader from "@/components/shared/Loader"
 
 const Signup = () => {
-  const isLoading = true
+  const isLoading = false
   
   // 1. Define your form.
   const form = useForm<zod.infer<typeof SignupValidation>>({
@@ -356,13 +357,18 @@ const Signup = () => {
             )}
           />
           </div>
-          <Button type="submit" className="shad-button_primary">
+          <Button type="submit" className="mt-4 shad-button_primary">
             { isLoading ? (
               <div className="flex-center gap-2">
+                <Loader />
                 Loading...
               </div>
             ): "Signup"}
           </Button>
+          <p className="text-small-regular text-light-2 text-center mt-2">
+              Already have an account?
+              <Link to="/login" className="text-primary-500 text-small-semibold ml-1">Login</Link>
+          </p>
         </form>
       </div>
     </Form>
