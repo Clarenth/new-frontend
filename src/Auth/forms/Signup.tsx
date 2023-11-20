@@ -15,7 +15,6 @@ import { Loader } from "@mantine/core"
 // Styles
 
 
-
 const Signup = () => {
   const isLoading = false
   
@@ -58,7 +57,8 @@ const Signup = () => {
         <img src="assets/images/logo.svg" alt="logo" />
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Create a new account</h2>
         <p className="text-light-3 small-medium md:base-regular mt-2">To use Colony Office, create an account</p>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5 w-full mt-4">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2 w-full mt-4">
+          <div className="flex flex-row gap-3 w-full mt-4">
           <FormField
             control={form.control}
             name="email"
@@ -74,7 +74,7 @@ const Signup = () => {
                   />
                 </FormControl>
                 <FormDescription>
-                  Email.
+                  Email goes here.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -101,6 +101,73 @@ const Signup = () => {
               </FormItem>
             )}
           />
+          </div>
+          <div className="flex flex-row gap-5 w-full mt-4">
+          <FormField
+            control={form.control}
+            name="employee_identity_data.first_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>First Name</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is your first name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="employee_identity_data.middle_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Middle Name</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormDescription>
+                  middle name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="employee_identity_data.last_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>last_name</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormDescription>
+                  last name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          </div>
+          <div className="flex flex-row gap-5 w-full mt-4">
           <FormField
             control={form.control}
             name="phone_number"
@@ -164,12 +231,14 @@ const Signup = () => {
               </FormItem>
             )}
           />
+          </div>
+          <div className="flex flex-row gap-5 w-full mt-4">
           <FormField
             control={form.control}
-            name="employee_identity_data.first_name"
+            name="employee_identity_data.sex"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>First Name</FormLabel>
+                <FormLabel>sex</FormLabel>
                 <FormControl>
                   <Input 
                     type="text" 
@@ -179,7 +248,7 @@ const Signup = () => {
                   />
                 </FormControl>
                 <FormDescription>
-                  This is your first name.
+                  Sex.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -187,10 +256,10 @@ const Signup = () => {
           />
           <FormField
             control={form.control}
-            name="employee_identity_data.middle_name"
+            name="employee_identity_data.gender"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Middle Name</FormLabel>
+                <FormLabel>gender</FormLabel>
                 <FormControl>
                   <Input 
                     type="text" 
@@ -200,14 +269,59 @@ const Signup = () => {
                   />
                 </FormControl>
                 <FormDescription>
-                  This is your public display name.
+                  gender.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
-          /><FormField
+          />
+          <FormField
             control={form.control}
-            name="employee_identity_data.last_name"
+            name="employee_identity_data.age"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>age</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormDescription>
+                  age.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="employee_identity_data.height"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>height</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormDescription>
+                  height.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          </div>
+          <div className="flex flex-row gap-5 w-full mt-4">
+          <FormField
+            control={form.control}
+            name="employee_identity_data.home_address"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Last Name</FormLabel>
@@ -220,12 +334,78 @@ const Signup = () => {
                   />
                 </FormControl>
                 <FormDescription>
-                  This is your public display name.
+                  home address.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="employee_identity_data.birthdate"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>birthdate</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormDescription>
+                  birthdate.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="employee_identity_data.birthplace"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>birthplace</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormDescription>
+                  birthplace.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          </div>
+          <div className="flex flex-row gap-5 w-full mt-4">
+          <FormField
+            control={form.control}
+            name="security_access_level"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>security_access_level</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormDescription>
+                  security_access_level.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          </div>
           <Button type="submit" className="shad-button_primary">
             { isLoading ? (
               <div className="flex-center gap-2">
