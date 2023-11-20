@@ -6,17 +6,23 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 // Internal Lib
 import { SignupValidation } from "@/lib/validation"
+import { createAccount } from "@/lib/colony-office/api"
+
 
 // Components
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
 
 // Shared
 import Loader from "@/components/shared/Loader"
 
 const Signup = () => {
   const isLoading = false
+
+  // Hooks
+  const { toast } = useToast();
   
   // 1. Define your form.
   const form = useForm<zod.infer<typeof SignupValidation>>({
@@ -45,10 +51,17 @@ const Signup = () => {
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: zod.infer<typeof SignupValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  async function onSubmit(values: zod.infer<typeof SignupValidation>) {
+    const newAccount = await createAccount(values);
+    console.log(newAccount);
+    if(!newAccount){
+      return toast({
+        title: "Signup failed! Please try again.",
+      })
+    }
+
+    // Create session is likely not going to be done. Should navigate to login
+    // const session = await signInAccount();
   }
   
   return (
@@ -68,7 +81,7 @@ const Signup = () => {
                   <Input 
                     type="email" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Email"
                     {...field} 
                   />
                 </FormControl>
@@ -86,7 +99,7 @@ const Signup = () => {
                   <Input 
                     type="password" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Password"
                     {...field} 
                   />
                 </FormControl>
@@ -106,7 +119,7 @@ const Signup = () => {
                   <Input 
                     type="tel" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Phone Number"
                     {...field} 
                   />
                 </FormControl>
@@ -124,7 +137,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Job Title"
                     {...field} 
                   />
                 </FormControl>
@@ -142,7 +155,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Office Address"
                     {...field} 
                   />
                 </FormControl>
@@ -162,7 +175,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="First Name"
                     {...field} 
                   />
                 </FormControl>
@@ -180,7 +193,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Middle Name"
                     {...field} 
                   />
                 </FormControl>
@@ -198,7 +211,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Last Name"
                     {...field} 
                   />
                 </FormControl>
@@ -218,7 +231,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Sex"
                     {...field} 
                   />
                 </FormControl>
@@ -236,7 +249,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Gender"
                     {...field} 
                   />
                 </FormControl>
@@ -254,7 +267,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Age"
                     {...field} 
                   />
                 </FormControl>
@@ -272,7 +285,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Height"
                     {...field} 
                   />
                 </FormControl>
@@ -292,7 +305,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Home Address"
                     {...field} 
                   />
                 </FormControl>
@@ -310,7 +323,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Birthdate"
                     {...field} 
                   />
                 </FormControl>
@@ -328,7 +341,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Birthplace"
                     {...field} 
                   />
                 </FormControl>
@@ -348,7 +361,7 @@ const Signup = () => {
                   <Input 
                     type="text" 
                     className="shad-input"
-                    placeholder="shadcn"
+                    placeholder="Security Access Level"
                     {...field} 
                   />
                 </FormControl>

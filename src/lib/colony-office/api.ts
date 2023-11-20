@@ -3,7 +3,7 @@ import { serverConfig } from './config';
 
 export async function createAccount(account: INewAccount) {
   const url = serverConfig.signup;
-  // const url = "http://localhost:4000/auth/signup";
+  //const url = "http://localhost:4000/auth/signup";
     const payload = 
     {
       method: 'POST',
@@ -39,6 +39,8 @@ export async function createAccount(account: INewAccount) {
   try {
     const newAccount = await fetch(url, payload)
     console.log(newAccount)
+
+    if(!newAccount) throw Error;
     return newAccount;
   } catch (error) {
     console.log(error)
