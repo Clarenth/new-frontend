@@ -10,6 +10,7 @@ import { SignupValidation } from "@/lib/validation"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Loader } from "@mantine/core"
 
 // Styles
 
@@ -73,7 +74,7 @@ const Signup = () => {
                   />
                 </FormControl>
                 <FormDescription>
-                  This is your public display name.
+                  Email.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -115,7 +116,7 @@ const Signup = () => {
                   />
                 </FormControl>
                 <FormDescription>
-                  This is your public display name.
+                  Phone Number.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -157,7 +158,7 @@ const Signup = () => {
                   />
                 </FormControl>
                 <FormDescription>
-                  This is your public display name.
+                  Office Address.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -165,13 +166,54 @@ const Signup = () => {
           />
           <FormField
             control={form.control}
-            name="employee_identity_data"
+            name="employee_identity_data.first_name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Phone Number</FormLabel>
+                <FormLabel>First Name</FormLabel>
                 <FormControl>
                   <Input 
-                    type="tel" 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is your first name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="employee_identity_data.middle_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Middle Name</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormDescription>
+                  This is your public display name.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          /><FormField
+            control={form.control}
+            name="employee_identity_data.last_name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Last Name</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
                     className="shad-input"
                     placeholder="shadcn"
                     {...field} 
@@ -187,6 +229,7 @@ const Signup = () => {
           <Button type="submit" className="shad-button_primary">
             { isLoading ? (
               <div className="flex-center gap-2">
+                <Loader />
                 Loading...
               </div>
             ): "Signup"}
