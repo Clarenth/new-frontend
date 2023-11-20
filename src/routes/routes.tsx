@@ -9,8 +9,6 @@ import Signup from "../Auth/forms/Signup";
 import { Home } from "../_root/pages";
 import AuthLayout from "../Auth/AuthLayout";
 import RootLayout from "../_root/RootLayout";
-import { Signup2 } from "@/Auth/forms/Signup2";
-
 
 const routes = createBrowserRouter(
   createRoutesFromElements(

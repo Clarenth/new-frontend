@@ -8,15 +8,14 @@ import { SignupValidation } from "@/lib/validation"
 
 // Components
 import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Loader } from "@mantine/core"
 
 // Styles
 
 
 const Signup = () => {
-  const isLoading = false
+  const isLoading = true
   
   // 1. Define your form.
   const form = useForm<zod.infer<typeof SignupValidation>>({
@@ -53,10 +52,9 @@ const Signup = () => {
   
   return (
     <Form {...form}>
-      <div className="sm:w-420 flex-center flex-col">
+      <div className="sm:w-420 flex-center flex-col"> {/*</div><div className="sm:w-420 flex-center flex-col">*/}
         <img src="assets/images/logo.svg" alt="logo" />
-        <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Create a new account</h2>
-        <p className="text-light-3 small-medium md:base-regular mt-2">To use Colony Office, create an account</p>
+        <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Create Account</h2>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2 w-full mt-4">
           <div className="flex flex-row gap-3 w-full mt-4">
           <FormField
@@ -73,9 +71,6 @@ const Signup = () => {
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription>
-                  Email goes here.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -94,80 +89,12 @@ const Signup = () => {
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription>
-                  This is your Password.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
           </div>
-          <div className="flex flex-row gap-5 w-full mt-4">
-          <FormField
-            control={form.control}
-            name="employee_identity_data.first_name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>First Name</FormLabel>
-                <FormControl>
-                  <Input 
-                    type="text" 
-                    className="shad-input"
-                    placeholder="shadcn"
-                    {...field} 
-                  />
-                </FormControl>
-                <FormDescription>
-                  This is your first name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="employee_identity_data.middle_name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Middle Name</FormLabel>
-                <FormControl>
-                  <Input 
-                    type="text" 
-                    className="shad-input"
-                    placeholder="shadcn"
-                    {...field} 
-                  />
-                </FormControl>
-                <FormDescription>
-                  middle name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="employee_identity_data.last_name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>last_name</FormLabel>
-                <FormControl>
-                  <Input 
-                    type="text" 
-                    className="shad-input"
-                    placeholder="shadcn"
-                    {...field} 
-                  />
-                </FormControl>
-                <FormDescription>
-                  last name.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          </div>
-          <div className="flex flex-row gap-5 w-full mt-4">
+          <div className="flex flex-row gap-3 w-full mt-4">
           <FormField
             control={form.control}
             name="phone_number"
@@ -182,9 +109,6 @@ const Signup = () => {
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription>
-                  Phone Number.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -203,9 +127,6 @@ const Signup = () => {
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription>
-                  Job Title.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -224,21 +145,18 @@ const Signup = () => {
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription>
-                  Office Address.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
           </div>
-          <div className="flex flex-row gap-5 w-full mt-4">
+          <div className="flex flex-row gap-3 w-full mt-4">
           <FormField
             control={form.control}
-            name="employee_identity_data.sex"
+            name="employee_identity_data.first_name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>sex</FormLabel>
+                <FormLabel>First Name</FormLabel>
                 <FormControl>
                   <Input 
                     type="text" 
@@ -247,19 +165,16 @@ const Signup = () => {
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription>
-                  Sex.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            name="employee_identity_data.gender"
+            name="employee_identity_data.middle_name"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>gender</FormLabel>
+                <FormLabel>Middle Name</FormLabel>
                 <FormControl>
                   <Input 
                     type="text" 
@@ -268,60 +183,13 @@ const Signup = () => {
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription>
-                  gender.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            name="employee_identity_data.age"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>age</FormLabel>
-                <FormControl>
-                  <Input 
-                    type="text" 
-                    className="shad-input"
-                    placeholder="shadcn"
-                    {...field} 
-                  />
-                </FormControl>
-                <FormDescription>
-                  age.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="employee_identity_data.height"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>height</FormLabel>
-                <FormControl>
-                  <Input 
-                    type="text" 
-                    className="shad-input"
-                    placeholder="shadcn"
-                    {...field} 
-                  />
-                </FormControl>
-                <FormDescription>
-                  height.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          </div>
-          <div className="flex flex-row gap-5 w-full mt-4">
-          <FormField
-            control={form.control}
-            name="employee_identity_data.home_address"
+            name="employee_identity_data.last_name"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Last Name</FormLabel>
@@ -333,9 +201,100 @@ const Signup = () => {
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription>
-                  home address.
-                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          </div>
+          <div className="flex flex-row gap-3 w-full mt-4">
+          <FormField
+            control={form.control}
+            name="employee_identity_data.sex"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Sex</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="employee_identity_data.gender"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Gender</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="employee_identity_data.age"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Age</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="employee_identity_data.height"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Height</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          </div>
+          <div className="flex flex-row gap-3 w-full mt-4">
+          <FormField
+            control={form.control}
+            name="employee_identity_data.home_address"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Home Address</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="text" 
+                    className="shad-input"
+                    placeholder="shadcn"
+                    {...field} 
+                  />
+                </FormControl>
                 <FormMessage />
               </FormItem>
             )}
@@ -345,7 +304,7 @@ const Signup = () => {
             name="employee_identity_data.birthdate"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>birthdate</FormLabel>
+                <FormLabel>Birthdate</FormLabel>
                 <FormControl>
                   <Input 
                     type="text" 
@@ -354,9 +313,6 @@ const Signup = () => {
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription>
-                  birthdate.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -366,7 +322,7 @@ const Signup = () => {
             name="employee_identity_data.birthplace"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>birthplace</FormLabel>
+                <FormLabel>Birthplace</FormLabel>
                 <FormControl>
                   <Input 
                     type="text" 
@@ -375,21 +331,18 @@ const Signup = () => {
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription>
-                  birthplace.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
           </div>
-          <div className="flex flex-row gap-5 w-full mt-4">
+          <div className="flex-row gap-3 w-full mt-4">
           <FormField
             control={form.control}
             name="security_access_level"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>security_access_level</FormLabel>
+                <FormLabel>Security Access Level</FormLabel>
                 <FormControl>
                   <Input 
                     type="text" 
@@ -398,9 +351,6 @@ const Signup = () => {
                     {...field} 
                   />
                 </FormControl>
-                <FormDescription>
-                  security_access_level.
-                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -409,7 +359,6 @@ const Signup = () => {
           <Button type="submit" className="shad-button_primary">
             { isLoading ? (
               <div className="flex-center gap-2">
-                <Loader />
                 Loading...
               </div>
             ): "Signup"}
