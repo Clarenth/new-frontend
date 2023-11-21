@@ -1,7 +1,7 @@
 import { INewAccount } from '@/types'
 import { serverConfig } from './config';
 
-export async function createAccount(account: INewAccount) {
+export async function postCreateAccount(account: INewAccount) {
   const url = serverConfig.signup;
   const payload = 
   {
@@ -47,7 +47,7 @@ export async function createAccount(account: INewAccount) {
   }
 }
 
-export async function loginAccount(account: { email: string, password: string }) {
+export async function postLoginAccount(account: { email: string, password: string }) {
   const url = serverConfig.login;
   const payload = 
   {
@@ -95,9 +95,32 @@ export async function getCurrentAccount() {
       }
     )
     const result = await currentAccount.json();
-    return result;
+    
+    if(!result) throw Error;
 
-    //if(!) throw Error;
+    return result;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function postNewTokenPair() {
+  const url = serverConfig.newTokenPair;
+  try {
+    await fetch(url, 
+      {
+        method: 'POST',
+        headers: 
+        {
+          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`
+        }
+      }
+    )
+    .then(response => response.json())
+    .then(data => {
+      sessionStorage.setItem("idToken", data.tokens.idToken)
+      sessionStorage.setItem("refreshToken", data.tokens.refreshToken)
+    })
   } catch (error) {
     console.log(error)
   }

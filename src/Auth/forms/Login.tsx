@@ -45,27 +45,85 @@ const Login = () => {
     return accountData;
   }
 
-  async function getAccountData() {
-    const account = await fetch("http://localhost:4000/auth/account", {
+  const accountPromise = async () => {
+    const getAccount = await (await fetch("http://localhost:4000/auth/account", {
       method: 'GET',
       headers:
       {
         Authorization: `Bearer ${sessionStorage.getItem("idToken")}`
       }
+    })).json()
+
+    const data = Promise.all(
+      [getAccount].map((obj) => {
+        console.log(obj)
+        const account = {
+          firstName: obj.account.employee_identity_data.first_name,
+          lastName: obj.account.employee_identity_data.last_name,
+          email: obj.account.email,
+          phoneNumber: obj.account.phone_number,
+          jobTitle: obj.account.job_title,
+          officeAddress: obj.account.office_address,
+          employmentDate: obj.account.employment_date,
+        }
+        console.log(account)
+        return account;
+      })
+    )
+  }
+
+  const getAccountData = async () => {
+    try {
+      const getAccount = await fetch("http://localhost:4000/auth/account", {
+        method: 'GET',
+        headers:
+        {
+          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`
+        }
+      })
+      const result = await getAccount.json();
+      [result].map((data) => {
+        console.log(data)
+        const account = {
+          firstName: data.employee_identity_data.first_name,
+          lastName: data.employee_identity_data.last_name,
+          email: data.email,
+          phoneNumber: data.phone_number,
+          jobTitle: data.job_title,
+          officeAddress: data.office_address,
+          employmentDate: data.employment_date,
+        }
+        console.log("Hello from displayAccount: ", account)
+        return account;
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const displayAccount = async() => {
+    const result = await getAccountData();
+    [result].map((data) => {
+      console.log(data)
+      const account = {
+        firstName: data.employee_identity_data.first_name,
+        lastName: data.employee_identity_data.last_name,
+        email: data.email,
+        phoneNumber: data.phone_number,
+        jobTitle: data.job_title,
+        officeAddress: data.office_address,
+        employmentDate: data.employment_date,
+      }
+      console.log("Hello from displayAccount: ", account)
+      return account;
     })
-    const result = await account.json();
-    const miro = result;
-    console.log("hello miro", miro);
-    return miro;
   }
 
   useEffect(() => {
-    // login();
+    //login();
     // setTimeout(() => { console.log("wait 2") }, 2000)
-    // getAccount();
-
-    // const myAccount = getAccountData();
-    // console.log("myAccount", myAccount)
+    accountPromise();
+    getAccount();
   })
 
   return (

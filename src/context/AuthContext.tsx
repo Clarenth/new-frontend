@@ -49,11 +49,11 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       const currentAccount = await getCurrentAccount();
 
-      // if(currentAccount) {
-      //   setAccount({
-      //     email: currentAccount
-      //   })
-      // }
+      if(currentAccount) {
+        setAccount({
+          email: currentAccount
+        })
+      }
       return false;
     } catch (error) {
       console.log(error)
