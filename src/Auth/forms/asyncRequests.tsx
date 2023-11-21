@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-const Login = () => {
+const AsyncRequests = () => {
 
   const login = () => {
     fetch("http://localhost:4000/auth/signin", 
@@ -57,20 +57,21 @@ const Login = () => {
     const data = Promise.all(
       [getAccount].map((obj) => {
         console.log(obj)
-        const account = obj
-        // const account = {
-        //   firstName: obj.account.employee_identity_data.first_name,
-        //   lastName: obj.account.employee_identity_data.last_name,
-        //   email: obj.account.email,
-        //   phoneNumber: obj.account.phone_number,
-        //   jobTitle: obj.account.job_title,
-        //   officeAddress: obj.account.office_address,
-        //   employmentDate: obj.account.employment_date,
-        // }
+        const account = {
+          firstName: obj.account.employee_identity_data.first_name,
+          lastName: obj.account.employee_identity_data.last_name,
+          email: obj.account.email,
+          phoneNumber: obj.account.phone_number,
+          jobTitle: obj.account.job_title,
+          officeAddress: obj.account.office_address,
+          employmentDate: obj.account.employment_date,
+        }
         return account
+        //console.log(account)
+        //return account;
       })
     )
-    return data
+    //return data
   }
 
   const getAccountData = async () => {
@@ -124,14 +125,11 @@ const Login = () => {
   }
 
   useEffect(() => {
-    // login();
+    //login();
     // setTimeout(() => { console.log("wait 2") }, 2000)
-    // accountPromise();
+    //accountPromise();
     //console.log("getAccount: ", getAccount());
-    //displayAccount();
-    // const result = getAccount();
-    // console.log(result)
-    //displayAccount();
+    displayAccount();
   })
 
   return (
@@ -139,4 +137,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default AsyncRequests;

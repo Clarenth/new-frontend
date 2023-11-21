@@ -85,7 +85,7 @@ export async function postLoginAccount(account: { email: string, password: strin
 export async function getCurrentAccount() {
   const url = serverConfig.currentAccount;
   try {
-    const currentAccount = await fetch(url,
+    const fetchAccount = await fetch(url,
       {
         method: 'GET',
         headers:
@@ -94,14 +94,38 @@ export async function getCurrentAccount() {
         }
       }
     )
-    const result = await currentAccount.json();
-    
-    if(!result) throw Error;
-
-    return result;
+    .then(response => response.json())
+    .then((data) => {
+      const account = data;
+      return account;
+    })
+    return fetchAccount;
   } catch (error) {
     console.log(error)
   }
+}
+
+export async function getAccountPromiseAll() {
+  const url = serverConfig.currentAccount;
+  const getAccount = await (await fetch(url, {
+    method: 'GET',
+    headers:
+    {
+      Authorization: `Bearer ${sessionStorage.getItem("idToken")}`
+    }
+  })).json()
+
+  const data = Promise.all(
+    [getAccount].map((obj) => {
+      console.log(obj)
+      const account = obj
+      /*to get a value from obj: 
+        obj.account.employee_identity_data.<field>,
+      */
+      return account
+    })
+  )
+  return data
 }
 
 export async function postNewTokenPair() {
