@@ -6,8 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 
 // Internal Lib
 import { SignupValidation } from "@/lib/validation"
-import { createAccount } from "@/lib/colony-office/api"
 
+// React-Query Mutations
+import { useCreateAccountMutation, useLoginAccountMutation } from "@/lib/react-query/queriesAndMutations";
 
 // Components
 import { Button } from "@/components/ui/button"
@@ -19,10 +20,11 @@ import { useToast } from "@/components/ui/use-toast"
 import Loader from "@/components/shared/Loader"
 
 const Signup = () => {
-  const isLoading = false
-
   // Hooks
   const { toast } = useToast();
+
+  const { mutateAsync: createAccount, isLoading: isCreatingAccount } = useCreateAccountMutation();
+  const { mutateAsync: loginAccount, isLoading: isLoggingIn } = useLoginAccountMutation();
   
   // 1. Define your form.
   const form = useForm<zod.infer<typeof SignupValidation>>({
@@ -61,7 +63,13 @@ const Signup = () => {
     }
 
     // Create session is likely not going to be done. Should navigate to login
-    // const session = await signInAccount();
+    const session = await loginAccount({
+      email: values.email,
+      password: values.password,
+    });
+    if(!session) {
+      return toast({ title: 'Login failed. Please try again.' })
+    }
   }
   
   return (
@@ -371,7 +379,7 @@ const Signup = () => {
           />
           </div>
           <Button type="submit" className="mt-4 shad-button_primary">
-            { isLoading ? (
+            { isCreatingAccount ? (
               <div className="flex-center gap-2">
                 <Loader />
                 Loading...
