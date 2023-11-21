@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { getCurrentAccount } from '@/lib/colony-office/api';
 
 // Types
-import { IAccount, IContextType } from '@/types';
+import { IAccount } from '@/types';
 
 export const INITIAL_ACCOUNT = {
   email: "",
@@ -24,7 +24,7 @@ export const INITIAL_ACCOUNT = {
   birthdate: "",
   birthplace: "",
   securityAccessLevel: ""
-}
+};
 
 const INITIAL_STATE = {
   account: INITIAL_ACCOUNT,
@@ -33,11 +33,20 @@ const INITIAL_STATE = {
   setAccount: () => {},
   setIsAuthenticated: () => {},
   checkAuthAccount: async () => false as boolean
+};
+
+export type IContextType = {
+  account: IAccount;
+  isLoading: boolean;
+  setAccount: React.Dispatch<React.SetStateAction<IAccount>>;
+  isAuthenticated: boolean,
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  checkAuthAccount: () => Promise<boolean>
 }
 
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
 
-const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export function AuthProvider ({ children }: { children: React.ReactNode }) {
   const [account, setAccount] = useState<IAccount>(INITIAL_ACCOUNT)
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -105,6 +114,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-export default AuthProvider;
+//export default AuthProvider;
 
 export const useAccountContext = () => useContext(AuthContext)

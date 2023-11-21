@@ -1,5 +1,5 @@
 // Libraries
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import * as zod from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -10,21 +10,25 @@ import { SignupValidation } from "@/lib/validation"
 // React-Query Mutations
 import { useCreateAccountMutation, useLoginAccountMutation } from "@/lib/react-query/queriesAndMutations";
 
+// Context
+import { useAccountContext } from "@/context/AuthContext"
+
 // Components
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
-
 // Shared
 import Loader from "@/components/shared/Loader"
 
 const Signup = () => {
   // Hooks
+  const navigate = useNavigate();
   const { toast } = useToast();
+  const { checkAuthAccount, isLoading } = useAccountContext();
 
-  const { mutateAsync: createAccount, isLoading: isCreatingAccount } = useCreateAccountMutation();
-  const { mutateAsync: loginAccount, isLoading: isLoggingIn } = useLoginAccountMutation();
+  const { mutateAsync: createAccount, isPending: isCreatingAccount } = useCreateAccountMutation();
+  const { mutateAsync: loginAccount, isPending: isLoggingIn } = useLoginAccountMutation();
   
   // 1. Define your form.
   const form = useForm<zod.infer<typeof SignupValidation>>({
@@ -69,6 +73,15 @@ const Signup = () => {
     });
     if(!session) {
       return toast({ title: 'Login failed. Please try again.' })
+    }
+
+    const isLoggedIn = await checkAuthAccount();
+
+    if(isLoggedIn) {
+      form.reset()
+      navigate("/")
+    } else {
+      return toast({ title: "Login failed. Please try again." })
     }
   }
   
