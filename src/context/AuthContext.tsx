@@ -91,9 +91,9 @@ export function AuthProvider ({ children }: { children: React.ReactNode }) {
     if
     (
       sessionStorage.getItem("idToken") === "" ||
-      sessionStorage.getItem("idToken") === null ||
-      sessionStorage.getItem("refreshToken") === "" ||
-      sessionStorage.getItem("refreshToken") === null
+      //sessionStorage.getItem("idToken") === null ||
+      sessionStorage.getItem("refreshToken") === ""
+      //sessionStorage.getItem("refreshToken") === null
     ) navigate("/login")
     checkAuthAccount();
   }, [])
