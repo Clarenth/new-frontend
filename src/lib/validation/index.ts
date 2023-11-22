@@ -21,3 +21,9 @@ export const SignupValidation = zod.object({
   }),
   security_access_level: zod.string().min(2).max(50),
 })
+
+
+export const LoginValidation = zod.object({
+  email: zod.string().email(),
+  password: zod.string().min(16, 'password is too short').max(128),
+})

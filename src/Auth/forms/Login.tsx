@@ -1,142 +1,133 @@
-import React, { useEffect } from 'react'
+// Libraries
+import { Link, useNavigate } from "react-router-dom"
+import { useForm } from "react-hook-form"
+import * as zod from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+
+// Internal Lib
+import { LoginValidation } from "@/lib/validation"
+
+// React-Query Mutations
+import { useCreateAccountMutation, useLoginAccountMutation } from "@/lib/react-query/queriesAndMutations";
+
+// Context
+import { useAccountContext } from "@/context/AuthContext"
+
+// Components
+import { Button } from "@/components/ui/button"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { useToast } from "@/components/ui/use-toast"
+// Shared
+import Loader from "@/components/shared/Loader"
+import { postLoginAccount } from "@/lib/colony-office/api"
 
 const Login = () => {
+  // Hooks
+  const navigate = useNavigate();
+  const { toast } = useToast();
+  const { checkAuthAccount, isLoading } = useAccountContext();
 
-  const login = () => {
-    fetch("http://localhost:4000/auth/signin", 
-    {
-      method: 'POST',
-      headers: 
-      {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(
-        {
-          email: "crag@tarr.gov",
-          password: "BatteryHorseStapleGenerator",
-        }
-      ),
-    })
-    .then(response => response.json())
-    .then(data => {
-      sessionStorage.setItem("idToken", data.tokens.idToken)
-      sessionStorage.setItem("refreshToken", data.tokens.refreshToken)
-    })
-    .catch(error => console.log(error))
+  const { mutateAsync: loginAccount, isPending: isLoggingIn } = useLoginAccountMutation();
+  
+  // 1. Define your form.
+  const form = useForm<zod.infer<typeof LoginValidation>>({
+    resolver: zodResolver(LoginValidation),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  })
+ 
+  // 2. Define a submit handler.
+  async function onSubmit(values: zod.infer<typeof LoginValidation>) {
+    const newAccount = await postLoginAccount(values);
+    console.log(newAccount);
+    if(!newAccount){
+      return toast({
+        title: "Signup failed! Please try again.",
+      })
+    }
+
+    // Create session is likely not going to be done. Should navigate to login
+    const session = await loginAccount({
+      email: values.email,
+      password: values.password,
+    });
+    if(!session) {
+      return toast({ title: 'Login failed. Please try again.' })
+    }
+
+    const isLoggedIn = await checkAuthAccount();
+
+    if(isLoggedIn) {
+      form.reset()
+      navigate("/")
+    } else {
+      return toast({ title: "Login failed. Please try again." })
+    }
   }
   
-  const getAccount = async () => {
-    const accountData = await fetch("http://localhost:4000/auth/account", 
-    {
-      method: 'GET',
-      headers:
-      {
-        Authorization: `Bearer ${sessionStorage.getItem("idToken")}`
-      }
-    }
-    )
-    .then(response => response.json())
-    .then((data) => {
-      const account = data;
-      //console.log("Hello from inside fetch: ", accountData)
-      return account;
-    })
-    //console.log("Hello accountData: ", accountData)
-    return accountData;
-  }
-
-  const accountPromise = async () => {
-    const getAccount = await (await fetch("http://localhost:4000/auth/account", {
-      method: 'GET',
-      headers:
-      {
-        Authorization: `Bearer ${sessionStorage.getItem("idToken")}`
-      }
-    })).json()
-
-    const data = Promise.all(
-      [getAccount].map((obj) => {
-        console.log(obj)
-        const account = obj
-        // const account = {
-        //   firstName: obj.account.employee_identity_data.first_name,
-        //   lastName: obj.account.employee_identity_data.last_name,
-        //   email: obj.account.email,
-        //   phoneNumber: obj.account.phone_number,
-        //   jobTitle: obj.account.job_title,
-        //   officeAddress: obj.account.office_address,
-        //   employmentDate: obj.account.employment_date,
-        // }
-        return account
-      })
-    )
-    return data
-  }
-
-  const getAccountData = async () => {
-    try {
-      const getAccount = await fetch("http://localhost:4000/auth/account", {
-        method: 'GET',
-        headers:
-        {
-          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`
-        }
-      })
-      const result = await getAccount.json();
-      [result].map((data) => {
-        console.log(data)
-        const account = {
-          firstName: data.employee_identity_data.first_name,
-          middleName: data.employee_identity_data.middle_name,
-          lastName: data.employee_identity_data.last_name,
-          email: data.email,
-          phoneNumber: data.phone_number,
-          jobTitle: data.job_title,
-          officeAddress: data.office_address,
-          employmentDate: data.employment_date,
-        }
-        console.log("Hello from displayAccount: ", account)
-        return account;
-      })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const displayAccount = async() => {
-    const result = await getAccount();
-    console.log(result)
-    return result;
-    [result].map((data) => {
-      //console.log(data)
-      const account = {
-        firstName: data.account.employee_identity_data.first_name,
-        lastName: data.account.employee_identity_data.last_name,
-        email: data.account.email,
-        phoneNumber: data.account.phone_number,
-        jobTitle: data.account.job_title,
-        officeAddress: data.account.office_address,
-        employmentDate: data.account.employment_date,
-      }
-      console.log("Hello from displayAccount: ", account)
-      return account;
-    })
-  }
-
-  useEffect(() => {
-    // login();
-    // setTimeout(() => { console.log("wait 2") }, 2000)
-    // accountPromise();
-    //console.log("getAccount: ", getAccount());
-    //displayAccount();
-    // const result = getAccount();
-    // console.log(result)
-    //displayAccount();
-  })
-
   return (
-    <div>Login</div>
+    <Form {...form}>
+      <div className="sm:w-420 flex-center flex-col"> {/*</div><div className="sm:w-420 flex-center flex-col">*/}
+        <img src="assets/images/logo.svg" alt="logo" />
+        <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Create Account</h2>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2 w-full mt-4">
+          <div className="flex flex-row gap-3 w-full mt-4">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="email" 
+                    className="shad-input"
+                    placeholder="Email"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input 
+                    type="password" 
+                    className="shad-input"
+                    placeholder="Password"
+                    {...field} 
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          </div>
+          <Button type="submit" className="mt-4 shad-button_primary">
+            { isCreatingAccount ? (
+              <div className="flex-center gap-2">
+                <Loader />
+                Loading...
+              </div>
+            ): "Signup"}
+          </Button>
+          <p className="text-small-regular text-light-2 text-center mt-2">
+              Already have an account?
+              <Link to="/login" className="text-primary-500 text-small-semibold ml-1">Login</Link>
+          </p>
+        </form>
+      </div>
+    </Form>
   )
 }
 
-export default Login
+export default Login;

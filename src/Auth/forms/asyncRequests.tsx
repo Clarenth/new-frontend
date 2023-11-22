@@ -57,21 +57,20 @@ const AsyncRequests = () => {
     const data = Promise.all(
       [getAccount].map((obj) => {
         console.log(obj)
-        const account = {
-          firstName: obj.account.employee_identity_data.first_name,
-          lastName: obj.account.employee_identity_data.last_name,
-          email: obj.account.email,
-          phoneNumber: obj.account.phone_number,
-          jobTitle: obj.account.job_title,
-          officeAddress: obj.account.office_address,
-          employmentDate: obj.account.employment_date,
-        }
+        const account = obj
+        // const account = {
+        //   firstName: obj.account.employee_identity_data.first_name,
+        //   lastName: obj.account.employee_identity_data.last_name,
+        //   email: obj.account.email,
+        //   phoneNumber: obj.account.phone_number,
+        //   jobTitle: obj.account.job_title,
+        //   officeAddress: obj.account.office_address,
+        //   employmentDate: obj.account.employment_date,
+        // }
         return account
-        //console.log(account)
-        //return account;
       })
     )
-    //return data
+    return data
   }
 
   const getAccountData = async () => {
@@ -129,7 +128,10 @@ const AsyncRequests = () => {
     // setTimeout(() => { console.log("wait 2") }, 2000)
     //accountPromise();
     //console.log("getAccount: ", getAccount());
-    displayAccount();
+    //displayAccount();
+    // const result = getAccount();
+    // console.log(result)
+    //displayAccount();
   })
 
   return (

@@ -90,9 +90,9 @@ export function AuthProvider ({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     if
     (
-      sessionStorage.getItem("idToken") === "" ||
+      sessionStorage.getItem("idToken") === "[]" ||
       //sessionStorage.getItem("idToken") === null ||
-      sessionStorage.getItem("refreshToken") === ""
+      sessionStorage.getItem("refreshToken") === "[]"
       //sessionStorage.getItem("refreshToken") === null
     ) navigate("/login")
     checkAuthAccount();
