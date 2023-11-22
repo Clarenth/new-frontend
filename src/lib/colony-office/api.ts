@@ -70,15 +70,46 @@ export async function postLoginAccount(account: { email: string, password: strin
     .then(data => {
       sessionStorage.setItem("idToken", data.tokens.idToken)
       sessionStorage.setItem("refreshToken", data.tokens.refreshToken)
+      /*
+      Check if what comes back matches a JWT structure
+      We should not just allow anything to be placed in the session storage
+      */
+     return true
     })
     .catch(error => console.log(error))
-    console.log(login)
+    //console.log(login)
 
-    //if(!login) throw Error;
-    //return login;
+    if (!login) throw Error;
+    return login;
   } catch (error) {
     console.log(error)
     return error;
+  }
+}
+
+export async function postLogoutAccount() {
+  const url = serverConfig.logout;
+  try {
+    //await fetch(url, 
+    const logout = await fetch(url, 
+      {
+        method: 'POST',
+        headers:
+        {
+          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`
+        }
+      }
+    )
+    .then(response => response.json())
+    .then(data => {
+      sessionStorage.removeItem("idToken");
+      sessionStorage.removeItem("refreshToken");
+      console.log(data)
+    })
+    return logout
+
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -131,7 +162,7 @@ export async function getAccountPromiseAll() {
 export async function postNewTokenPair() {
   const url = serverConfig.newTokenPair;
   try {
-    await fetch(url, 
+    const newTokens = await fetch(url, 
       {
         method: 'POST',
         headers: 
@@ -141,11 +172,15 @@ export async function postNewTokenPair() {
       }
     )
     .then(response => response.json())
-    .then(data => {
-      sessionStorage.setItem("idToken", data.tokens.idToken)
-      sessionStorage.setItem("refreshToken", data.tokens.refreshToken)
+    .then((response) => {
+      //const jwt = response.tokens.idToken;
+      sessionStorage.setItem("idToken", response.tokens.idToken)
+      sessionStorage.setItem("refreshToken", response.tokens.refreshToken)
+      return true
     })
+    return newTokens
   } catch (error) {
     console.log(error)
+    return false
   }
 }

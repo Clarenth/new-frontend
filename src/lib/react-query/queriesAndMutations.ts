@@ -6,7 +6,7 @@ import {
 } from '@tanstack/react-query';
 
 // API
-import { postCreateAccount, postLoginAccount } from '../colony-office/api';
+import { postCreateAccount, postLoginAccount, postLogoutAccount } from '../colony-office/api';
 
 // Types
 import { INewAccount } from '@/types';
@@ -31,5 +31,11 @@ export const useLoginAccountMutation = () => {
       email: string, 
       password: string
     }) => postLoginAccount(account)
+  })
+}
+ 
+export const useLogoutAccountMutation = () => {
+  return useMutation({
+    mutationFn: () => postLogoutAccount()
   })
 }

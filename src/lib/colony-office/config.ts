@@ -1,7 +1,9 @@
 export const serverConfig = {
-  host: import.meta.env.VITE_SERVER,
-  signup: import.meta.env.VITE_SERVER_SIGNUP,
-  login: import.meta.env.VITE_SERVER_LOGIN,
   currentAccount: import.meta.env.VITE_SERVER_CURRENT_ACCOUNT,
+  host: import.meta.env.VITE_SERVER,
+  login: import.meta.env.VITE_SERVER_LOGIN,
+  logout: import .meta.env.VITE_SERVER_LOGOUT,
   newTokenPair: import.meta.env.VITE_SERVER_NEW_TOKEN_PAIR,
+  signup: import.meta.env.VITE_SERVER_SIGNUP,
+
 }

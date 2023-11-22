@@ -3,7 +3,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // API
-import { getCurrentAccount } from '@/lib/colony-office/api';
+import { getCurrentAccount, postNewTokenPair } from '@/lib/colony-office/api';
 
 // Types
 import { IAccount } from '@/types';
@@ -28,26 +28,31 @@ export const INITIAL_ACCOUNT = {
 
 const INITIAL_STATE = {
   account: INITIAL_ACCOUNT,
+  jwt: "",
   isLoading: false,
   isAuthenticated: false,
   setAccount: () => {},
   setIsAuthenticated: () => {},
-  checkAuthAccount: async () => false as boolean
+  checkAuthAccount: async () => false as boolean,
+  fetchNewTokenPair: async () => false as boolean,
 };
 
 export type IContextType = {
   account: IAccount;
+  jwt: string;
   isLoading: boolean;
   setAccount: React.Dispatch<React.SetStateAction<IAccount>>;
   isAuthenticated: boolean,
   setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
   checkAuthAccount: () => Promise<boolean>
+  fetchNewTokenPair: () => Promise<boolean | undefined>
 }
 
 const AuthContext = createContext<IContextType>(INITIAL_STATE);
 
 export function AuthProvider ({ children }: { children: React.ReactNode }) {
   const [account, setAccount] = useState<IAccount>(INITIAL_ACCOUNT)
+  const [jwt, setJWT] = useState("")
   const [isLoading, setIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -87,6 +92,20 @@ export function AuthProvider ({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const fetchNewTokenPair = async () => {
+    try {
+      const newTokenPair = await postNewTokenPair()
+
+      if(!newTokenPair){
+        setIsAuthenticated(true)
+        return true
+      }
+      return false
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     if
     (
@@ -100,11 +119,13 @@ export function AuthProvider ({ children }: { children: React.ReactNode }) {
 
   const value = {
     account,
+    jwt,
     setAccount,
     isLoading,
     isAuthenticated,
     setIsAuthenticated,
     checkAuthAccount,
+    fetchNewTokenPair,
   }
 
   return (

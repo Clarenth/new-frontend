@@ -236,7 +236,7 @@
   }
 
   /* Topbar */
-  .topbar {
+  .header {
     @apply sticky top-0 z-50 md:hidden bg-dark-2 w-full;
   }
 

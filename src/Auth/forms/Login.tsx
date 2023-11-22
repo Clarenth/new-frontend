@@ -44,7 +44,6 @@ const Login = () => {
   // 2. Define a submit handler.
   async function onSubmit(values: zod.infer<typeof LoginValidation>) {
     const newAccount = await postLoginAccount(values);
-    console.log(newAccount);
     if(!newAccount){
       return toast({
         title: "Signup failed! Please try again.",
