@@ -8,7 +8,10 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { LoginValidation } from "@/lib/validation"
 
 // React-Query Mutations
-import { useCreateAccountMutation, useLoginAccountMutation } from "@/lib/react-query/queriesAndMutations";
+import { useLoginAccountMutation } from "@/lib/react-query/queriesAndMutations";
+
+// API
+import { postLoginAccount } from "@/lib/colony-office/api"
 
 // Context
 import { useAccountContext } from "@/context/AuthContext"
@@ -20,7 +23,6 @@ import { Input } from "@/components/ui/input"
 import { useToast } from "@/components/ui/use-toast"
 // Shared
 import Loader from "@/components/shared/Loader"
-import { postLoginAccount } from "@/lib/colony-office/api"
 
 const Login = () => {
   // Hooks
@@ -28,7 +30,7 @@ const Login = () => {
   const { toast } = useToast();
   const { checkAuthAccount, isLoading } = useAccountContext();
 
-  const { mutateAsync: loginAccount, isPending: isLoggingIn } = useLoginAccountMutation();
+  const { mutateAsync: loginAccount } = useLoginAccountMutation();
   
   // 1. Define your form.
   const form = useForm<zod.infer<typeof LoginValidation>>({
@@ -74,7 +76,7 @@ const Login = () => {
         <img src="assets/images/logo.svg" alt="logo" />
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Create Account</h2>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2 w-full mt-4">
-          <div className="flex flex-row gap-3 w-full mt-4">
+          <div className="flex flex-col gap-3 w-full mt-4">
           <FormField
             control={form.control}
             name="email"
@@ -113,7 +115,7 @@ const Login = () => {
           />
           </div>
           <Button type="submit" className="mt-4 shad-button_primary">
-            { isCreatingAccount ? (
+            { isLoading ? (
               <div className="flex-center gap-2">
                 <Loader />
                 Loading...
@@ -121,8 +123,8 @@ const Login = () => {
             ): "Signup"}
           </Button>
           <p className="text-small-regular text-light-2 text-center mt-2">
-              Already have an account?
-              <Link to="/login" className="text-primary-500 text-small-semibold ml-1">Login</Link>
+              No account?
+              <Link to="/signup" className="text-primary-500 text-small-semibold ml-1">Signup!  </Link>
           </p>
         </form>
       </div>
