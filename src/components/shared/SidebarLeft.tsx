@@ -9,15 +9,50 @@ import { useLogoutAccountMutation } from '@/lib/react-query/queriesAndMutations'
 import { Button } from '../ui/button'
 import { useAccountContext } from '@/context/AuthContext'
 import { sidebarLinks } from '@/constants/index'
+import { Icon as TablerIcon, } from '@tabler/icons-react'
+
+interface SidebarLinkProps {
+  icon: TablerIcon;
+  label: string;
+  // active?: boolean;
+  // onClick?(): void;
+  route: string;
+}
 
 const SidebarLeft = () => {
   // Hooks
-  const { pathName} = useLocation();
+  const { pathName } = useLocation();
   const navigate = useNavigate();
   const { mutateAsync: logout, isSuccess } = useLogoutAccountMutation();
 
   // Context
   const { account } = useAccountContext();
+
+  /*
+    TODO: render the icon of each link obj in the array found in constants/index
+    apply tooltip hover with label of that NavLink
+  */
+
+  function SidebarLink({icon: Icon, label, active, onClick, pageLink}: SidebarLinkProps) {
+    const { classes, cx } = useStyles();
+    return (
+      <Tooltip label={label} position="right" withArrow transitionProps={{ duration: 130, transition: 'fade' }} >
+        <Link to={pageLink}>
+          <UnstyledButton onClick={onClick} className={cx(classes.link, { [classes.active]: active })}>
+            <Icon />
+          </UnstyledButton>
+        </Link>
+      </Tooltip>
+    )
+  }
+
+  function SidebarIcon({ icon: Icon, label, route,}: SidebarLinkProps) {
+    return (
+      <Button className=''>
+        <Icon />
+      </Button>
+    )
+  }
 
   useEffect(() => {
     if(isSuccess) {
@@ -54,7 +89,7 @@ const SidebarLeft = () => {
           { sidebarLinks.map((link) => {
             const isActive = pathName === link.route
             return (
-              <li key={link.label} className={`leftsidebar-link group ${isActive && 'bg-primary-500'}`}>
+              <li key={link.label} className={`leftsidebar-link group ${isActive && 'bg-blue-600'}`}>
               <NavLink
                 to={link.route}
                 className="flex gap-4 items-center p-4"
@@ -64,6 +99,7 @@ const SidebarLeft = () => {
                   alt={link.label}
                   className={`group-hover:invert-white ${isActive && 'invert-white'}`}
                 /> */}
+                
                 {link.label}
               </NavLink>
               </li>
