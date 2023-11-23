@@ -219,11 +219,11 @@
 
   /* Left sidebar */
   .leftsidebar {
-    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[270px] bg-dark-2;
+    @apply hidden md:flex px-6 py-10 flex-col justify-between min-w-[100px] bg-dark-2;
   }
 
   .leftsidebar-link {
-    @apply rounded-lg base-medium hover:bg-blue-600 transition;
+    @apply rounded-lg base-medium hover:bg-blue-800 transition;
   }
 
   /* Post Card */
@@ -267,7 +267,7 @@
 
   /* Button */
   .shad-button_primary {
-    @apply bg-blue-700 hover:bg-blue-600 text-light-1 flex gap-2 !important;
+    @apply bg-blue-800 hover:bg-blue-800 text-light-1 flex gap-2 !important;
   }
 
   .shad-button_dark_4 {
@@ -275,6 +275,10 @@
   }
 
   .shad-button_ghost {
-    @apply flex gap-4 items-center justify-start hover:bg-transparent hover:bg-blue-600 hover:text-white !important;
+    @apply flex gap-4 items-center justify-start hover:bg-transparent hover:bg-blue-800 hover:text-white !important;
+  }
+
+  .tooltip {
+    @apply hidden w-32 bg-black text-white text-center rounded-md p-1 absolute z-[1] bottom-[150%] left-[50%] -ml-16 after:content-[""] after:absolute after:top-[100%] after:left-[50%] after:-ml-1 after:w-1 after:border-solid !important;
   }
 }

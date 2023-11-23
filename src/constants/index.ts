@@ -1,22 +1,11 @@
-import { 
-  Icon as TablerIcon,
-  IconFiles, 
-  IconHome2,
-  IconMail, 
-  IconFileSearch,
-  Icon3dCubeSphere,
-  IconFingerprint,
-  // IconAccessPoint, 
-} from '@tabler/icons-react'
-
 export const sidebarLinks =
 [
-  { label: 'Home', icon: IconHome2, route: '/' },
-  { label: 'Documents', icon: IconFiles, route: '/docs' },
-  { label: 'Search', icon: IconFileSearch, route: '/search' },
-  { label: 'Communications', icon: IconMail, route: '/chat' },
-  { label: 'AI Overlord', icon: Icon3dCubeSphere, route: '/ai' },
-  { label: 'Account', icon: IconFingerprint, route: '/account' },
-  // { label: 'Signup/Signin', icon: IconAccessPoint, route: '/login' },
+  //{ label: 'Account', icon: "assets/fingerprint-svgrepo-com.svg", route: '/account' },
+  { label: 'Home', icon: "assets/arcgis-online-dark-svgrepo-com.svg", route: '/' },
+  { label: 'Documents', icon: "assets/article-dark-svgrepo-com.svg", route: '/docs' },
+  { label: 'Search', icon: "assets/geonet-question-dark-svgrepo-com.svg", route: '/search' },
+  { label: 'Chat', icon: "assets/envelope-dark-svgrepo-com.svg", route: '/chat' },
+  { label: 'AI Overlord', icon: "assets/clustering-dark-svgrepo-com.svg", route: '/ai' },
+  //{ label: 'Signup/Signin', icon: IconAccessPoint, route: '/login' },
   
 ]
