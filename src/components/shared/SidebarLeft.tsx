@@ -50,9 +50,9 @@ const SidebarLeft = () => {
             const isActive = pathname === link.route
             return (
               <li key={link.label} className={`leftsidebar-link group ${isActive && 'bg-blue-800'}`}>
-                <TooltipProvider>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
+                {/* <TooltipProvider> */}
+                  {/* <Tooltip> */}
+                    {/* <TooltipTrigger asChild> */}
                       <NavLink
                         to={link.route}
                         className="flex gap-4 items-center p-4"
@@ -66,12 +66,12 @@ const SidebarLeft = () => {
                         />
                         {link.label}
                       </NavLink>
-                    </TooltipTrigger>
-                    <TooltipContent >
-                      <p>{link.label}</p>
-                    </TooltipContent>
-                  </Tooltip>
-                </TooltipProvider>
+                    {/* </TooltipTrigger> */}
+                    {/* <TooltipContent > */}
+                      {/* <p>{link.label}</p> */}
+                    {/* </TooltipContent> */}
+                  {/* </Tooltip> */}
+                {/* </TooltipProvider> */}
               </li>
             )
           })}
@@ -85,7 +85,7 @@ const SidebarLeft = () => {
           width={36}
           height={36}
         />
-        <p className='small-medium lg:base-medium'></p>
+        <p className='small-medium lg:base-medium'>Logout</p>
       </Button>
     </nav>
   )
