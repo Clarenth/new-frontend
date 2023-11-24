@@ -24,7 +24,7 @@ const formSchema = z.object({
   }),
 })
 
-const CreateDocument = () => {
+const DocsCreateForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -64,4 +64,4 @@ const CreateDocument = () => {
   )
 }
 
-export default CreateDocument
+export default DocsCreateForm

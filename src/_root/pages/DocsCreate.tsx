@@ -1,4 +1,4 @@
-import CreateDocument from '@/components/forms/CreateDocument'
+import CreateDocument from '@/components/forms/DocsCreateForm'
 import React from 'react'
 
 const DocsCreate = () => {
