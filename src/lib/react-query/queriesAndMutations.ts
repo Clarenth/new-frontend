@@ -11,7 +11,6 @@ import { postCreateAccount, postLoginAccount, postLogoutAccount } from '../colon
 // Types
 import { INewAccount } from '@/types';
 
-
 /*
 Mutations are used as a middleware between the Client functions and the Server-side functions
 They can, or are, defined as having two parts: Query and Mutation
@@ -19,6 +18,7 @@ They can, or are, defined as having two parts: Query and Mutation
 -Mutation: is the Create, Update, and Delete in CRUD. Use for functions like POST, PATCH, PUT, DELETE
 */
 
+/********** Account Mutations **********/
 export const useCreateAccountMutation = () => {
   return useMutation({
     mutationFn: (account: INewAccount) => postCreateAccount(account)
@@ -39,3 +39,12 @@ export const useLogoutAccountMutation = () => {
     mutationFn: () => postLogoutAccount()
   })
 }
+
+/********** Document Mutations **********/
+export const useCreateDocumentMutation = () => {
+  return useMutation({
+    mutationFn: () => postCreateDocument()
+  })
+}
+
+/********** Files Mutations **********/

@@ -94,7 +94,8 @@ export function AuthProvider ({ children }: { children: React.ReactNode }) {
 
   const fetchNewTokenPair = async () => {
     try {
-      const newTokenPair = await postNewTokenPair()
+      const newTokenPair = await postNewTokenPair();
+      console.log("Hired useEffect")
 
       if(!newTokenPair){
         setIsAuthenticated(true)
@@ -107,6 +108,7 @@ export function AuthProvider ({ children }: { children: React.ReactNode }) {
   }
 
   useEffect(() => {
+    fetchNewTokenPair();
     if
     (
       sessionStorage.getItem("idToken") === "[]" ||

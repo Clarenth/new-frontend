@@ -1,5 +1,6 @@
 import { INewAccount } from '@/types'
 import { serverConfig } from './config';
+import { json } from 'stream/consumers';
 
 export async function postCreateAccount(account: INewAccount) {
   const url = serverConfig.signup;
@@ -159,28 +160,78 @@ export async function getAccountPromiseAll() {
   return data
 }
 
+/********** Tokens Mutations **********/
 export async function postNewTokenPair() {
   const url = serverConfig.newTokenPair;
-  try {
-    const newTokens = await fetch(url, 
+  const refreshToken = sessionStorage.getItem("refreshToken")
+  const payload =
+  {
+    method: 'POST',
+    headers: 
+    {
+      Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
+      "Content-Type": "application/json",
+
+    },
+    body: JSON.stringify(
       {
-        method: 'POST',
-        headers: 
-        {
-          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`
-        }
+        refreshToken: refreshToken,
       }
     )
+  }
+  try {
+    //const tokens = await fetch(url, payload)
+    const newTokens = await fetch(url, payload)
     .then(response => response.json())
-    .then((response) => {
-      //const jwt = response.tokens.idToken;
-      sessionStorage.setItem("idToken", response.tokens.idToken)
-      sessionStorage.setItem("refreshToken", response.tokens.refreshToken)
-      return true
+    .then((data) => {
+      console.log(data)
+      sessionStorage.setItem("idToken", data.tokens.idToken)
+      sessionStorage.setItem("refreshToken", data.tokens.refreshToken)
+      /*
+      Check if what comes back matches a JWT structure
+      We should not just allow anything to be placed in the session storage
+      */
+     return true
     })
-    return newTokens
+    //if (!newTokens) throw Error;
+    return newTokens;
+    //return newTokens
   } catch (error) {
     console.log(error)
     return false
   }
 }
+
+/********** Documents Mutations **********/
+export async function postCreateDocument() {
+  const url = serverConfig.currentAccount;
+  try {
+    const fetchAccount = await fetch(url,
+      {
+        method: 'POST',
+        headers:
+        {
+          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
+          "Content-Type": "application/json",
+
+        },
+        body: JSON.stringify(
+        {
+          title: "",
+          description: "",
+          language: "",
+          security_access_level: "",
+        })
+      }
+    )
+    .then(response => response.json())
+    .then((data) => {
+      const account = data;
+      return account;
+    })
+    return fetchAccount;
+  } catch (error) {
+    console.log(error)
+  }
+}
+

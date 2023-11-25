@@ -27,3 +27,11 @@ export const LoginValidation = zod.object({
   email: zod.string().email(),
   password: zod.string().min(16, 'password is too short').max(128),
 })
+
+export const DocsValidation = zod.object({
+  title: zod.string(),
+  description: zod.string(),
+  language: zod.string(),
+  security_access_level: zod.string(),
+  files: zod.custom<File[]>(),
+})

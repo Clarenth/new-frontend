@@ -4,53 +4,39 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+
+// Validation
+import { DocsValidation } from "@/lib/validation"
  
 // Components
 import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "../ui/textarea"
 import FileUploader from "../shared/FileUploader"
-import { DropdownMenu } from "../ui/dropdown-menu"
 import SecurityLevelDropdown from "../shared/SecurityLevelDropdown"
+import { useCreateAccountMutation } from "@/lib/react-query/queriesAndMutations"
 
-const formSchema = z.object({
-  title: z.string().min(2, {
-    message: "Title must be at least 2 characters.",
-  }),
-  description: z.string().min(2, {
-    message: "Description must be at least 2 characters.",
-  }),
-  language: z.string().min(2, {
-    message: "Language must be at least 2 characters.",
-  }),
-  security_access_level: z.string().min(2, {
-    message: "SecurityAccessLevel returns Dropdown error.."
-  })
-})
+// type DocsFormProps = {
+  
+// }
 
 const DocsCreateForm = ({ doc }) => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  // const { mutateAsync:  } = 
+
+  const form = useForm<z.infer<typeof DocsValidation>>({
+    resolver: zodResolver(DocsValidation),
     defaultValues: {
       title: "",
       description: "",
       language: "",
       security_access_level: "",
-      //files: ,
+      files: [],
     },
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof DocsValidation>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
@@ -68,9 +54,6 @@ const DocsCreateForm = ({ doc }) => {
               <FormControl>
                 <Input placeholder="shadcn" {...field} />
               </FormControl>
-              <FormDescription>
-                Title of the Document.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -97,9 +80,6 @@ const DocsCreateForm = ({ doc }) => {
               <FormControl>
                 <Input placeholder="shadcn" {...field} />
               </FormControl>
-              <FormDescription>
-                Language of the Document.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -113,7 +93,7 @@ const DocsCreateForm = ({ doc }) => {
               <FormControl>
                 <FileUploader 
                   fieldChange={field.onChange}
-                  mediaURL={ doc?.fileURLW }
+                  mediaURL={ doc?.fileURL }
                 />
               </FormControl>
               <FormMessage className="shad-form_message" />

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form"
 import * as zod from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 
-// Internal Lib
+// Validation
 import { SignupValidation } from "@/lib/validation"
 
 // React-Query Mutations
