@@ -38,6 +38,13 @@ export type INewAccount = {
   security_access_level: string
 }
 
+export type INewDocument = {
+  title: string,
+  description: string,
+  security_access_level: string,
+  language: string,
+}
+
 export type IContextType = {
   account: IAccount;
   isLoading: boolean;

@@ -1,4 +1,4 @@
-import { INewAccount } from '@/types'
+import { INewAccount, INewDocument } from '@/types'
 import { serverConfig } from './config';
 import { json } from 'stream/consumers';
 
@@ -203,35 +203,61 @@ export async function postNewTokenPair() {
 }
 
 /********** Documents Mutations **********/
-export async function postCreateDocument() {
-  const url = serverConfig.currentAccount;
-  try {
-    const fetchAccount = await fetch(url,
-      {
-        method: 'POST',
-        headers:
-        {
-          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
-          "Content-Type": "application/json",
+export async function postCreateDocument(document: INewDocument) {
+  const url = serverConfig.createDocument;
+  const payload = 
+  {
+    method: 'POST',
+    headers:
+    {
+      Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
+      "Content-Type": "application/json",
 
-        },
-        body: JSON.stringify(
-        {
-          title: "",
-          description: "",
-          language: "",
-          security_access_level: "",
-        })
-      }
-    )
+    },
+    body: JSON.stringify(
+    {
+      title: document.title,
+      description: document.description,
+      language: document.language,
+      security_access_level: document.security_access_level,
+    })
+  }
+  try {
+    const postDocument = await fetch(url, payload)
     .then(response => response.json())
     .then((data) => {
-      const account = data;
-      return account;
+      const documentID = data.document_code;
+      console.log(data)
+      return documentID;
     })
-    return fetchAccount;
+    return postDocument;
   } catch (error) {
     console.log(error)
   }
 }
 
+/********** Files Mutations **********/
+export async function postUploadFile(formData: FormData) {
+  const url = serverConfig.uploadFiles;
+  try {
+    const postFiles = await fetch(url,
+      {
+        method: 'POST',
+        headers:
+        {
+          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
+          "Content-Type": "multipart/form-data",
+        },
+        body: formData
+      }
+    )
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data)
+      return true
+    })
+    return true
+  } catch (error) {
+    console.log(error)
+  }
+}

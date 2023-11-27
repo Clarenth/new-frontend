@@ -6,10 +6,16 @@ import {
 } from '@tanstack/react-query';
 
 // API
-import { postCreateAccount, postLoginAccount, postLogoutAccount } from '../colony-office/api';
+import { 
+  postCreateAccount, 
+  postLoginAccount, 
+  postLogoutAccount,
+  postCreateDocument,
+  postUploadFile,
+} from '../colony-office/api';
 
 // Types
-import { INewAccount } from '@/types';
+import { INewAccount, INewDocument } from '@/types';
 
 /*
 Mutations are used as a middleware between the Client functions and the Server-side functions
@@ -43,8 +49,13 @@ export const useLogoutAccountMutation = () => {
 /********** Document Mutations **********/
 export const useCreateDocumentMutation = () => {
   return useMutation({
-    mutationFn: () => postCreateDocument()
+    mutationFn: (document: INewDocument) => postCreateDocument(document)
   })
 }
 
 /********** Files Mutations **********/
+export const useUploadFileMutation = () => {
+  return useMutation({
+    mutationFn: (file: FormData) => postUploadFile(file)
+  })
+}

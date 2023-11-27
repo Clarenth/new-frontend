@@ -1,13 +1,17 @@
 // Libraries
 "use client"
- 
+
+import * as z from "zod" 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import * as z from "zod"
+import { useNavigate } from "react-router-dom"
 
 // Validation
 import { DocsValidation } from "@/lib/validation"
- 
+
+// Mutation
+import { useCreateDocumentMutation, useUploadFileMutation } from "@/lib/react-query/queriesAndMutations"
+
 // Components
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
@@ -15,14 +19,17 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "../ui/textarea"
 import FileUploader from "../shared/FileUploader"
 import SecurityLevelDropdown from "../shared/SecurityLevelDropdown"
-import { useCreateAccountMutation } from "@/lib/react-query/queriesAndMutations"
+import { useToast } from "../ui/use-toast"
 
 // type DocsFormProps = {
   
 // }
 
 const DocsCreateForm = ({ doc }) => {
-  // const { mutateAsync:  } = 
+  const { mutateAsync: createDocument, isPending: isLoadingCreate } = useCreateDocumentMutation()
+  const { mutateAsync: uploadFile, isPending: isLoadingUpload } = useUploadFileMutation();
+  const { toast } = useToast();
+  const navigate = useNavigate()
 
   const form = useForm<z.infer<typeof DocsValidation>>({
     resolver: zodResolver(DocsValidation),
@@ -36,10 +43,35 @@ const DocsCreateForm = ({ doc }) => {
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof DocsValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof DocsValidation>) {
+    const formData = new FormData()
+
+    const newDocument = await createDocument(values)
+
+    if(!newDocument) {
+      toast({
+        title: "Create new document failed. Please try again."
+      })
+    }
+
+    formData.append("document_id", newDocument)
+    console.log(newDocument);
+
+    for(let i = 0; i <= values.files.length; i++) {
+      formData.append("files", values.files[i])
+    }
+
+    const newFiles = await uploadFile(formData)
+    
+    if(!newFiles) {
+      toast({
+        title: "Files upload failed. Investigate this error yourself.",
+      })
+    }
+
+    // in future, once create is successful, navigate to the newly created document
+    // navigate("/doc/:id")
+    navigate("/")
   }
 
   return (
@@ -52,7 +84,12 @@ const DocsCreateForm = ({ doc }) => {
             <FormItem>
               <FormLabel className="shad-form_label">Title</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input
+                  type="text" 
+                  placeholder="Title" 
+                  className="shad-input"
+                  {...field} 
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -78,7 +115,25 @@ const DocsCreateForm = ({ doc }) => {
             <FormItem>
               <FormLabel className="shad-form_label">Language</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input
+                  type="text"
+                  placeholder="language" 
+                  className="shad-input"
+                  {...field} 
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="security_access_level"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="shad-form_label">Security Access Level</FormLabel>
+              <FormControl>
+                <SecurityLevelDropdown />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -97,19 +152,6 @@ const DocsCreateForm = ({ doc }) => {
                 />
               </FormControl>
               <FormMessage className="shad-form_message" />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="security_access_level"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="shad-form_label">Security Access Level</FormLabel>
-              <FormControl>
-                <SecurityLevelDropdown />
-              </FormControl>
-              <FormMessage />
             </FormItem>
           )}
         />

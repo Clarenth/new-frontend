@@ -95,7 +95,7 @@ export function AuthProvider ({ children }: { children: React.ReactNode }) {
   const fetchNewTokenPair = async () => {
     try {
       const newTokenPair = await postNewTokenPair();
-      console.log("Hired useEffect")
+      console.log("Fired useEffect")
 
       if(!newTokenPair){
         setIsAuthenticated(true)
