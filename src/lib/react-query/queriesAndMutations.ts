@@ -12,10 +12,12 @@ import {
   postLogoutAccount,
   postCreateDocument,
   postUploadFile,
+  getRecentDocuments,
 } from '../colony-office/api';
 
 // Types
 import { INewAccount, INewDocument } from '@/types';
+import { QUERY_KEYS } from './querykeys';
 
 /*
 Mutations are used as a middleware between the Client functions and the Server-side functions
@@ -48,8 +50,21 @@ export const useLogoutAccountMutation = () => {
 
 /********** Document Mutations **********/
 export const useCreateDocumentMutation = () => {
+  const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (document: INewDocument) => postCreateDocument(document)
+    mutationFn: (document: INewDocument) => postCreateDocument(document),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_DOCUMENTS]
+      })
+    }
+  })
+}
+
+export const useGetRecentDocumentsMutation = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_RECENT_DOCUMENTS],
+    queryFn: getRecentDocuments,
   })
 }
 

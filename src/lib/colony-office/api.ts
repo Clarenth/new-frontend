@@ -236,6 +236,54 @@ export async function postCreateDocument(document: INewDocument) {
   }
 }
 
+export async function getDocuments() {
+  try {
+    const url = serverConfig.getDocuments;
+    const fetchDocuments = await fetch(url,
+      {
+        headers:
+        {
+          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
+        }
+      }
+    )
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data)
+      const docsObj = data;
+      return docsObj
+    })
+    return fetchDocuments
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function getRecentDocuments() {
+  try {
+    const url = serverConfig.getDocuments;
+    const fetchDocuments = await fetch(url,
+      {
+        headers:
+        {
+          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
+        }
+      }
+    )
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data)
+      const docsObj = data;
+      return docsObj
+    })
+    if(!fetchDocuments) throw Error;
+    return fetchDocuments
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 /********** Files Mutations **********/
 export async function postUploadFile(formData: FormData) {
   const url = serverConfig.uploadFiles;

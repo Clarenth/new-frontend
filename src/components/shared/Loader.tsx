@@ -4,7 +4,7 @@ const Loader = () => {
   return (
     <div className='flex-center w-fu'>
       <img 
-        src='/assets/icons/loader.svg'
+        src='/assets/loader.svg'
         width={24}
         height={24}
       />
