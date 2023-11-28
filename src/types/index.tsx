@@ -1,4 +1,5 @@
 export type IAccount = {
+  id_code: string;
   email: string,
   phoneNumber: string,
   jobTitle: string,

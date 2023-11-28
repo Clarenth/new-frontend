@@ -9,6 +9,7 @@ import { getCurrentAccount, postNewTokenPair } from '@/lib/colony-office/api';
 import { IAccount } from '@/types';
 
 export const INITIAL_ACCOUNT = {
+  id_code: "",
   email: "",
   phoneNumber: "",
   jobTitle: "",
@@ -64,6 +65,7 @@ export function AuthProvider ({ children }: { children: React.ReactNode }) {
 
       if(currentAccount) {
         setAccount({
+          id_code: currentAccount.account.id_code,
           email: currentAccount.account.email,
           phoneNumber: currentAccount.account.phoneNumber,
           jobTitle: currentAccount.account.jobTitle,
