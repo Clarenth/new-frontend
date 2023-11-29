@@ -10,6 +10,13 @@ type FileUploaderProps = {
   mediaURL: string,
 }
 
+/*
+TODO
+-Replace the large image screen with a list of files coming from the files
+ object we get with the documentID.
+ Display: file_title
+*/
+
 const FileUploader = ({ fieldChange, mediaURL }: FileUploaderProps) => {
   const [file, setFile] = useState<File[]>([]);
   const [fileURL, setFileURL] = useState('');

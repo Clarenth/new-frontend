@@ -15,6 +15,7 @@ import {
   getRecentDocuments,
   getCurrentAccount,
   getDocumentByID,
+  getFilesByDocumentID,
 } from '../colony-office/api';
 
 // Types
@@ -77,11 +78,11 @@ export const useGetRecentDocumentsMutation = () => {
   })
 }
 
-export const useGetDocumentByIDMutation = (documentID: string) => {
+export const useGetDocumentByIDMutation = (document_id: string) => {
   return useQuery({
-    queryKey: [QUERY_KEYS.GET_DOCUMENT_BY_ID, documentID],
-    queryFn: () => getDocumentByID(documentID),
-    enabled: !!documentID
+    queryKey: [QUERY_KEYS.GET_DOCUMENT_BY_ID, document_id],
+    queryFn: () => getDocumentByID(document_id),
+    enabled: !!document_id
   })
 }
 
@@ -89,5 +90,13 @@ export const useGetDocumentByIDMutation = (documentID: string) => {
 export const useUploadFileMutation = () => {
   return useMutation({
     mutationFn: (file: FormData) => postUploadFile(file)
+  })
+}
+
+export const useGetFilesByDocumentIDMutation = (document_id: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_FILES_BY_DOC_ID, document_id],
+    queryFn: () => getFilesByDocumentID(document_id),
+    enabled: !!document_id
   })
 }

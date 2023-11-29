@@ -14,5 +14,7 @@ export const serverConfig = {
   createDocument: import.meta.env.VITE_SERVER_CREATE_DOCUMENTS,
 
   // Files
-  uploadFiles: import.meta.env.VITE_SERVER_UPLOAD_FILES_UPLOAD
+  uploadFiles: import.meta.env.VITE_SERVER_UPLOAD_FILES,
+  getFilesByID: import.meta.env.VITE_SERVER_GET_FILE_BY_ID,
+  getFilesByDocumentID: import.meta.env.VITE_SERVER_GET_FILE_BY_DOC_ID,
 }

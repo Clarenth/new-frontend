@@ -7,7 +7,7 @@ const DocsCreate = () => {
       <div className='common-container'>
         <div className='max-w-5xl flex-start gap-3 justify-start w-full'>
           <img 
-            src='assets/plus-dark-svgrepo-com.svg'
+            src='/assets/plus-dark-svgrepo-com.svg'
             alt='add-post'
             width={36}
             height={36}

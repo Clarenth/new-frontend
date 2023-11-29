@@ -9,6 +9,9 @@ export enum QUERY_KEYS {
   GET_DOCUMENT_BY_ID = "getDocumentByID",
   GET_INFINITE_DOCUMENTS = "getInfiniteDocuments",
 
+  // Files
+  GET_FILES_BY_DOC_ID = "getFilesByDocumentID",
+
   // Search
   SEARCH_DOCUMENTS = "getSearchDocuments",
 

@@ -34,12 +34,12 @@ const App = () => {
           {/* private routes */}
           <Route element={<RootLayout />}>
             <Route index element={<Home />} />
-            <Route path='/account/:id' element={<Account />} />
-            <Route path='/account-update/:id' element={<Account />} />
+            <Route path='/account/:id_code' element={<Account />} />
+            <Route path='/account-update/:document_id' element={<Account />} />
             <Route path='/docs' element={<Docs />} />
-            <Route path='/docs/:id' element={<Docs />} />
+            <Route path='/docs/:document_id' element={<Docs />} />
             <Route path='/create-docs' element={<DocsCreate />} />
-            <Route path='/edit-docs/:id' element={<DocsEdit />} />
+            <Route path='/edit-docs/:document_id' element={<DocsEdit />} />
             <Route path='/search' element={<Search />} />
             <Route path='/chat' element={<Chat />} />
             <Route path='/ai' element={<AI />} />

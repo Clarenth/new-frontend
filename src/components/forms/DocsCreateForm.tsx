@@ -27,15 +27,24 @@ type DocsFormProps = {
     document_title: string;
     author_name: string;
     author_id: string;
+    description: string;
     language: string;
     created_at: string;
     security_access_level: string;
   }
 
-  action: 'Create' | 'Update';
+  files: {
+    file_title: string;
+    author_name: string;
+    security_access_level: string;
+    created_at: string;
+    updated_at: string;
+  }
+
+  action: 'create' | 'edit';
 }
 
-const DocsCreateForm = ({ document, action }: DocsFormProps) => {
+const DocsCreateForm = ({ document, files, action }: DocsFormProps) => {
   const { mutateAsync: createDocument, isPending: isLoadingCreate } = useCreateDocumentMutation()
   const { mutateAsync: uploadFile, isPending: isLoadingUpload } = useUploadFileMutation();
   const { toast } = useToast();
@@ -44,13 +53,14 @@ const DocsCreateForm = ({ document, action }: DocsFormProps) => {
   const form = useForm<z.infer<typeof DocsValidation>>({
     resolver: zodResolver(DocsValidation),
     defaultValues: {
-      title: "",
-      description: "",
-      language: "",
-      security_access_level: "",
+      title: document ? document?.document.document_title : "",
+      description: document ? document?.document.description : "",
+      language: document ? document?.document.language : "",
+      security_access_level: document ? document?.document.security_access_level : "",
       files: [],
     },
   })
+  console.log("Hello from DocsCreateForm: ", document)
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof DocsValidation>) {

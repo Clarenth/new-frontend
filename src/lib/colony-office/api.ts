@@ -261,9 +261,26 @@ export async function getDocuments() {
 
 export async function getDocumentByID(document_id: string) {
   try {
-    const url = serverConfig.getDocumentByID
+    const url = `${serverConfig.getDocumentByID}${document_id}`
+    console.log(url)
 
-    const document = await fetch(url, payload)
+    const fetchDocument = await fetch(url,
+      {
+        method: 'GET',
+        headers:
+        {
+          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
+        }
+      }
+    )
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data)
+      const docsObj = data;
+      return docsObj
+    })
+    if(!fetchDocument) throw Error;
+    return fetchDocument;
   } catch (error) {
     console.log(error)
   }
@@ -315,6 +332,60 @@ export async function postUploadFile(formData: FormData) {
       return true
     })
     return true
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function getFilesByID(files_id: string) {
+  try {
+    const url = `${serverConfig.getFilesByID}${files_id}`
+    console.log(url)
+
+    const fetchDocument = await fetch(url,
+      {
+        method: 'GET',
+        headers:
+        {
+          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
+        }
+      }
+    )
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data)
+      const filesObj = data;
+      return filesObj
+    })
+    if(!fetchDocument) throw Error;
+    return fetchDocument;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function getFilesByDocumentID(document_id: string) {
+  try {
+    const url = `${serverConfig.getFilesByDocumentID}${document_id}`
+    console.log(url)
+
+    const fetchDocument = await fetch(url,
+      {
+        method: 'GET',
+        headers:
+        {
+          Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
+        }
+      }
+    )
+    .then(response => response.json())
+    .then((data) => {
+      console.log(data)
+      const filesObj = data;
+      return filesObj
+    })
+    if(!fetchDocument) throw Error;
+    return fetchDocument;
   } catch (error) {
     console.log(error)
   }
