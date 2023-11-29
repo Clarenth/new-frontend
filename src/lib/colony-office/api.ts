@@ -259,6 +259,16 @@ export async function getDocuments() {
   }
 }
 
+export async function getDocumentByID(document_id: string) {
+  try {
+    const url = serverConfig.getDocumentByID
+
+    const document = await fetch(url, payload)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export async function getRecentDocuments() {
   try {
     const url = serverConfig.getDocuments;
@@ -278,7 +288,7 @@ export async function getRecentDocuments() {
     })
     if(!fetchDocuments) throw Error;
     return fetchDocuments
-    
+
   } catch (error) {
     console.log(error)
   }

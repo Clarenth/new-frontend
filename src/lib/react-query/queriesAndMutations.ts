@@ -13,6 +13,8 @@ import {
   postCreateDocument,
   postUploadFile,
   getRecentDocuments,
+  getCurrentAccount,
+  getDocumentByID,
 } from '../colony-office/api';
 
 // Types
@@ -48,6 +50,13 @@ export const useLogoutAccountMutation = () => {
   })
 }
 
+export const useGetCurrentAccount = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_CURRENT_ACCOUNT],
+    queryFn: getCurrentAccount,
+  })
+}
+
 /********** Document Mutations **********/
 export const useCreateDocumentMutation = () => {
   const queryClient = useQueryClient();
@@ -65,6 +74,14 @@ export const useGetRecentDocumentsMutation = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_RECENT_DOCUMENTS],
     queryFn: getRecentDocuments,
+  })
+}
+
+export const useGetDocumentByIDMutation = (documentID: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_DOCUMENT_BY_ID, documentID],
+    queryFn: () => getDocumentByID(documentID),
+    enabled: !!documentID
   })
 }
 

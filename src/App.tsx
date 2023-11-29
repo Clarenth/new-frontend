@@ -12,7 +12,7 @@ import AuthLayout from "./Auth/AuthLayout";
 import RootLayout from "./_root/RootLayout";
 
 // Pages
-import { Account, AI, Chat, Docs, DocsCreate, DocsUpdate, Home, Search } from "./_root/pages";
+import { Account, AI, Chat, Docs, DocsCreate, DocsEdit, Home, Search } from "./_root/pages";
 
 // Routes
 //import routes from './routes/routes'
@@ -38,8 +38,8 @@ const App = () => {
             <Route path='/account-update/:id' element={<Account />} />
             <Route path='/docs' element={<Docs />} />
             <Route path='/docs/:id' element={<Docs />} />
-            <Route path='/docs-create' element={<DocsCreate />} />
-            <Route path='/docs-update' element={<DocsUpdate />} />
+            <Route path='/create-docs' element={<DocsCreate />} />
+            <Route path='/edit-docs/:id' element={<DocsEdit />} />
             <Route path='/search' element={<Search />} />
             <Route path='/chat' element={<Chat />} />
             <Route path='/ai' element={<AI />} />

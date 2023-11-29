@@ -21,11 +21,21 @@ import FileUploader from "../shared/FileUploader"
 import SecurityLevelDropdown from "../shared/SecurityLevelDropdown"
 import { useToast } from "../ui/use-toast"
 
-// type DocsFormProps = {
-  
-// }
+type DocsFormProps = {
+  document: {
+    document_id: string;
+    document_title: string;
+    author_name: string;
+    author_id: string;
+    language: string;
+    created_at: string;
+    security_access_level: string;
+  }
 
-const DocsCreateForm = ({ doc }) => {
+  action: 'Create' | 'Update';
+}
+
+const DocsCreateForm = ({ document, action }: DocsFormProps) => {
   const { mutateAsync: createDocument, isPending: isLoadingCreate } = useCreateDocumentMutation()
   const { mutateAsync: uploadFile, isPending: isLoadingUpload } = useUploadFileMutation();
   const { toast } = useToast();
@@ -70,8 +80,8 @@ const DocsCreateForm = ({ doc }) => {
     }
 
     // in future, once create is successful, navigate to the newly created document
-    // navigate("/doc/:id")
-    navigate("/")
+    navigate("/doc/:id")
+    //navigate("/")
   }
 
   return (
@@ -148,7 +158,7 @@ const DocsCreateForm = ({ doc }) => {
               <FormControl>
                 <FileUploader 
                   fieldChange={field.onChange}
-                  mediaURL={ doc?.fileURL }
+                  mediaURL={ document?.fileURL }
                 />
               </FormControl>
               <FormMessage className="shad-form_message" />

@@ -10,6 +10,7 @@ export const serverConfig = {
 
   // Documents
   getDocuments: import.meta.env.VITE_SERVER_GET_DOCUMENTS,
+  getDocumentByID: import.meta.env.VITE_SERVER_GET_DOCUMENTS_BY_ID,
   createDocument: import.meta.env.VITE_SERVER_CREATE_DOCUMENTS,
 
   // Files

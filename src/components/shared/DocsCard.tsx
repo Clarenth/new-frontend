@@ -33,18 +33,16 @@ const DocsCard = ({ document }: documentCardProps) => {
             <p className='base-medium lg:body-bold'>
               {document.document_title}
             </p>
-
-            <div className='flex flex-row gap-2 base-medium lg:body-bold text-light-1'>
-              <p className='subtle-semibold lg:small-regular'>
-                {document.author_name}
-              </p>
-              <p className='subtle-semibold lg:small-regular'>
-                {document.language}
-              </p>
-              <p className='subtle-semibold lg:small-regular'>
-                {document.created_at}
-              </p>
-            </div>
+            <p className='subtle-semibold lg:small-regular'>
+              Author: {document.author_name}
+            </p>
+            <p className='subtle-semibold lg:small-regular'>
+              Date: {document.created_at}
+            </p>
+            <p className='subtle-semibold lg:small-regular'>
+              Language: {document.language}
+            </p>
+            
           </div>
         </div>
         </Link>
@@ -52,7 +50,7 @@ const DocsCard = ({ document }: documentCardProps) => {
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Link to={`/update-doc/${document.document_id}`}
+              <Link to={`/edit-docs/${document.document_id}`}
                 className={`${account.id_code !== document.author_id} && "hidden"`}
               >          
                 <img 

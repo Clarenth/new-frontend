@@ -6,7 +6,7 @@ const Docs = () => {
   return (
     <div>
       Docs
-      <Link to="/docs-create" className='text-blue-500'>
+      <Link to="/create-docs" className='text-blue-500'>
         Docs-Create
       </Link>
     </div>
