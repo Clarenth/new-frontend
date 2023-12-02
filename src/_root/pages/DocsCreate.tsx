@@ -14,7 +14,7 @@ const DocsCreate = () => {
           />
           <h2 className='h3-bold md:h2-bold text-left w-full'></h2>
         </div>
-        <CreateDocument />
+        <CreateDocument action='create' />
       </div>
     </div>
   )

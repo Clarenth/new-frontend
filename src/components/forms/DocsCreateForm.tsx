@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom"
 import { DocsValidation } from "@/lib/validation"
 
 // Mutation
-import { useCreateDocumentMutation, useUploadFileMutation } from "@/lib/react-query/queriesAndMutations"
+import { useCreateDocumentMutation, useUpdateDocumentMutation, useUploadFileMutation } from "@/lib/react-query/queriesAndMutations"
 
 // Components
 import { Button } from "@/components/ui/button"
@@ -22,7 +22,7 @@ import SecurityLevelDropdown from "../shared/SecurityLevelDropdown"
 import { useToast } from "../ui/use-toast"
 
 type DocsFormProps = {
-  document: {
+  document?: {
     document_id: string;
     document_title: string;
     author_name: string;
@@ -33,7 +33,7 @@ type DocsFormProps = {
     security_access_level: string;
   }
 
-  files: {
+  files?: {
     file_title: string;
     author_name: string;
     security_access_level: string;
@@ -41,18 +41,22 @@ type DocsFormProps = {
     updated_at: string;
   }
 
-  action: 'create' | 'edit';
+  action: 'create' | 'update';
 }
 
 const DocsCreateForm = ({ document, files, action }: DocsFormProps) => {
   const { mutateAsync: createDocument, isPending: isLoadingCreate } = useCreateDocumentMutation()
+  const { mutateAsync: updateDocument, isPending: isLoadingUpdate} = useUpdateDocumentMutation();
   const { mutateAsync: uploadFile, isPending: isLoadingUpload } = useUploadFileMutation();
+  
   const { toast } = useToast();
   const navigate = useNavigate()
 
   const form = useForm<z.infer<typeof DocsValidation>>({
     resolver: zodResolver(DocsValidation),
     defaultValues: {
+      // This used to be a solution: title: document ? document?.document_title
+      // but now it is not needed. Preserve it incase future me needs it.
       title: document ? document?.document.document_title : "",
       description: document ? document?.document.description : "",
       language: document ? document?.document.language : "",
@@ -64,8 +68,20 @@ const DocsCreateForm = ({ document, files, action }: DocsFormProps) => {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof DocsValidation>) {
+    if(document && action === 'update') {
+      const updatedDocument = await updateDocument({
+        ...values,
+        document_id: document.document_id,
+      })
+      if(!updatedDocument) {
+        toast({
+          title: "Updated failed. Try again."
+        })
+      }
+      return navigate(`/posts/${document.document_id}`)
+    }
+    
     const formData = new FormData()
-
     const newDocument = await createDocument(values)
 
     if(!newDocument) {
@@ -177,7 +193,14 @@ const DocsCreateForm = ({ document, files, action }: DocsFormProps) => {
         />
         <div className="flex gap-4 items-center justify-end">
           <Button type="button" className="shad-button_dark_4">Cancel</Button>
-          <Button type="submit" className="shad-button_primary whitespace-nowrap">Submit</Button>
+          <Button 
+            type="submit" 
+            disabled={isLoadingCreate || isLoadingUpload} 
+            className="shad-button_primary whitespace-nowrap"
+          >
+            { isLoadingCreate || isLoadingUpdate && 'Loading...' }
+            {action} Submit
+          </Button>
         </div>
       </form>
     </Form>

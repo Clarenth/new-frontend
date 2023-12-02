@@ -12,9 +12,13 @@ export const serverConfig = {
   getDocuments: import.meta.env.VITE_SERVER_GET_DOCUMENTS,
   getDocumentByID: import.meta.env.VITE_SERVER_GET_DOCUMENTS_BY_ID,
   createDocument: import.meta.env.VITE_SERVER_CREATE_DOCUMENTS,
+  deleteDocument: import.meta.env.VITE_SERVER_DELETE_DOCUMENT,
+  updateDocument: import.meta.env.VITE_SERVER_UPDATE_DOCUMENT,
 
   // Files
   uploadFiles: import.meta.env.VITE_SERVER_UPLOAD_FILES,
+  deleteFile: import.meta.env.VITE_SERVER_DELETE_FILE,
   getFilesByID: import.meta.env.VITE_SERVER_GET_FILE_BY_ID,
   getFilesByDocumentID: import.meta.env.VITE_SERVER_GET_FILE_BY_DOC_ID,
+
 }

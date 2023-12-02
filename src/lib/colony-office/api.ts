@@ -1,6 +1,5 @@
-import { INewAccount, INewDocument } from '@/types'
+import { INewAccount, INewDocument, IUpdateDocument } from '@/types'
 import { serverConfig } from './config';
-import { json } from 'stream/consumers';
 
 export async function postCreateAccount(account: INewAccount) {
   const url = serverConfig.signup;
@@ -236,6 +235,57 @@ export async function postCreateDocument(document: INewDocument) {
   }
 }
 
+export async function patchUpdateDocument(document: IUpdateDocument) {
+  const url = serverConfig.updateDocument;
+  const payload = 
+  {
+    method: 'PATCH',
+    headers:
+    {
+      Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
+      "Content-Type": "application/json",
+
+    },
+    body: JSON.stringify(
+    {
+      title: document.title,
+      description: document.description,
+      language: document.language,
+      security_access_level: document.security_access_level,
+    })
+  }
+  try {
+    const updateDocument = await fetch(url, payload)
+    .then(response => response.json())
+    .then((data) => {
+      const documentID = data.document_code;
+      console.log(data)
+      return documentID;
+    })
+    return updateDocument;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function deleteDocument(document_id: string) {
+  const url = `${serverConfig.deleteDocument}${document_id}`
+  const payload = 
+  {
+    method: 'DELETE',
+    headers: 
+    {
+      Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
+    }
+  }
+  try {
+    await fetch(url, payload)
+      .then(response => response)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export async function getDocuments() {
   try {
     const url = serverConfig.getDocuments;
@@ -331,7 +381,26 @@ export async function postUploadFile(formData: FormData) {
       console.log(data)
       return true
     })
-    return true
+    if(!postFiles) throw new Error;
+    return postFiles;
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function deleteFile(file_id: string) {
+  const url = `${serverConfig.deleteFile}${file_id}`
+  const payload = 
+  {
+    method: 'DELETE',
+    headers: 
+    {
+      Authorization: `Bearer ${sessionStorage.getItem("idToken")}`,
+    }
+  }
+  try {
+    await fetch(url, payload)
+      .then(response => response)
   } catch (error) {
     console.log(error)
   }

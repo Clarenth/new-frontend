@@ -31,8 +31,16 @@ const FileUploader = ({ fieldChange, mediaURL }: FileUploaderProps) => {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     accept: {
-      "application/*": ['.txt', '.pdf', '.odt', '.odp', '.ods', '.doc', '.docx', '.xls', '.xlsx',],
-      "image/*": ['.jpg', '.jpeg', '.png']
+      "image/*": ['.jpg', '.jpeg', '.png'],
+      "application/txt": ['.txt',],
+      "application/pdf": ['.pdf',],
+      "application/odt": ['.odt',],
+      "application/odp": ['.odp',],
+      "application/ods": ['.ods',],
+      "application/doc": ['.doc',],
+      "application/docx": ['.docx',],
+      "application/xls": ['.xls',],
+      "application/xlsx": ['.xlsx',],
     }
   });
 

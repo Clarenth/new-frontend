@@ -26,7 +26,7 @@ const DocsEdit = () => {
           />
           <h2 className='h3-bold md:h2-bold text-left w-full'></h2>
         </div>
-        <DocsCreateForm action="edit" document={document} files={files}/>
+        <DocsCreateForm action="update" document={document} files={files}/>
       </div>
     </div>
   )

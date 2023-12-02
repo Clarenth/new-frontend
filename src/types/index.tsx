@@ -46,6 +46,14 @@ export type INewDocument = {
   language: string,
 }
 
+export type IUpdateDocument = {
+  document_id: string;
+  title: string,
+  description: string,
+  security_access_level: string,
+  language: string,
+}
+
 export type IContextType = {
   account: IAccount;
   isLoading: boolean;

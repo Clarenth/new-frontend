@@ -16,10 +16,12 @@ import {
   getCurrentAccount,
   getDocumentByID,
   getFilesByDocumentID,
+  deleteDocument,
+  patchUpdateDocument,
 } from '../colony-office/api';
 
 // Types
-import { INewAccount, INewDocument } from '@/types';
+import { INewAccount, INewDocument, IUpdateDocument } from '@/types';
 import { QUERY_KEYS } from './querykeys';
 
 /*
@@ -71,6 +73,12 @@ export const useCreateDocumentMutation = () => {
   })
 }
 
+export const useDeleteDocumentMutation = () => {
+return useMutation({
+  mutationFn: (document_id: string) => deleteDocument(document_id)
+})
+}
+
 export const useGetRecentDocumentsMutation = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_RECENT_DOCUMENTS],
@@ -83,6 +91,19 @@ export const useGetDocumentByIDMutation = (document_id: string) => {
     queryKey: [QUERY_KEYS.GET_DOCUMENT_BY_ID, document_id],
     queryFn: () => getDocumentByID(document_id),
     enabled: !!document_id
+  })
+}
+
+export const useUpdateDocumentMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (document: IUpdateDocument) => patchUpdateDocument(document),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_DOCUMENT_BY_ID, data?.document_id]
+      })
+    }
   })
 }
 
