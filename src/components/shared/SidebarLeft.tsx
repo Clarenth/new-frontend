@@ -31,7 +31,7 @@ const SidebarLeft = () => {
       <div className='flex flex-col gap-11 '>
         <Link to={`/profile/${account.email}`} className='flex gap-3 items-center'>
           <img
-            src='assets/collaboration-dark-svgrepo-com.svg'
+            src='/assets/collaboration-dark-svgrepo-com.svg'
             width={24}
             height={24}
             className='h-14 w-14 rounded-full'

@@ -41,7 +41,7 @@ const Header = () => {
           </Button>
           <Link to={`/account/${account}`} className='flex-center gap-3'>
             <img 
-              src={'assets/images/profile-placeholder.svg'}
+              src={'/assets/images/profile-placeholder.svg'}
             />
           </Link>
         </div>

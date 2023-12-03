@@ -199,7 +199,7 @@ const DocsCreateForm = ({ document, files, action }: DocsFormProps) => {
             className="shad-button_primary whitespace-nowrap"
           >
             { isLoadingCreate || isLoadingUpdate && 'Loading...' }
-            {action} Submit
+            Submit
           </Button>
         </div>
       </form>

@@ -72,7 +72,7 @@ const Login = () => {
   return (
     <Form {...form}>
       <div className="sm:w-420 flex-center flex-col"> {/*</div><div className="sm:w-420 flex-center flex-col">*/}
-        <img src="assets/images/logo.svg" alt="logo" />
+        <img src="/assets/images/logo.svg" alt="logo" />
         <h2 className="h3-bold md:h2-bold pt-5 sm:pt-12">Login</h2>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-2 w-full mt-4">
           <div className="flex flex-col gap-3 w-full mt-4">
