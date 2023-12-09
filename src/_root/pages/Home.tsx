@@ -18,9 +18,9 @@ const Home = () => {
             ) : (
               <ul className='flex flex-col flex-1 gap-9 w-full'>
                 { documents?.documents.map((document) => (
-                  <React.Fragment>
+                  <li key={document?.document_id} className='flex justify-center w-full'>
                     <DocsCard document={document}/>
-                  </React.Fragment>
+                  </li>
                 ))}
               </ul>
             )

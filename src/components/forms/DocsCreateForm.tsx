@@ -78,7 +78,7 @@ const DocsCreateForm = ({ document, files, action }: DocsFormProps) => {
           title: "Updated failed. Try again."
         })
       }
-      return navigate(`/posts/${document.document_id}`)
+      return navigate(`/docs/${document.document_id}`)
     }
     
     const formData = new FormData()

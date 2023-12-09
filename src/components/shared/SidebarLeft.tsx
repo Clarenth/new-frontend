@@ -80,7 +80,7 @@ const SidebarLeft = () => {
 
       <Button onClick={() => logout} variant="ghost" className='shad-button_ghost'>
         <img 
-          src='assets/sign-out-dark-svgrepo-com.svg'
+          src='/assets/sign-out-dark-svgrepo-com.svg'
           alt='logout'
           width={36}
           height={36}
