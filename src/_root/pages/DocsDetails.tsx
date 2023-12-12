@@ -141,12 +141,15 @@ const DocsDetails = () => {
                 <div className='flex-grow border-t border-gray-400'></div>
               </div>
               <div className='flex-end gap-2'>
+                <Button variant="ghost" className='document_details-edit_btn '>
                 <Link to={`/edit-docs/${document_id}`} className={`${account.id_code !== document?.document?.author_id && 'hidden'}`}>
                   Edit
                 </Link>
+                  
+                </Button>
                 <Button 
                   variant="ghost"
-                  className={`ghost_details-delete-btn ${account.id_code !== document?.document?.author_id && 'hidden'}`}
+                  className={`document_details-delete_btn ${account.id_code !== document?.document?.author_id && 'hidden'}`}
                   onClick={handleDeleteDocument}>
                     Delete
                 </Button>
